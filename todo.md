@@ -4,7 +4,7 @@
 
 - [x] Add router for different screens
 - [x] Add a storage system (probably localStorage combined with vueuse composables?)
-- [ ] Localisation
+- [x] Localisation
 
 ## Features
 
@@ -19,7 +19,7 @@
     - [ ] Allow words to be removed from the filter
     - [ ] Store the words
 - [ ] Welcome messages
-    - [ ] Add a way to add one or more messages the bot should say when started
+  - [x] Add a way to add one or more messages the bot should say when started
 - [ ] Implement words that should not be translated
     - [ ] Keep `@mentions` intact
     - [ ] Allow words to be added
