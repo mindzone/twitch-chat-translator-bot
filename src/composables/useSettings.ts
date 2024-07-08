@@ -1,11 +1,11 @@
 import { useStorage } from '@vueuse/core';
 
-interface Settings {
+export interface Settings {
     postWelcomeMessage: boolean;
     welcomeMessages: string[];
 }
 
-const DefaultSettings: Settings = {
+export const DefaultSettings: Settings = {
     postWelcomeMessage: true,
     welcomeMessages: [
         'Twitch Chat Translator Bot connected.'

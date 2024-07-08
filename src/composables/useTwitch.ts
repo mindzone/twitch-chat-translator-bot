@@ -2,8 +2,9 @@ import { useTwitchToken } from "@/composables/useTwitchToken.ts";
 import { useTwitchUsername } from "@/composables/useTwitchUsername.ts";
 import { getTokenInfo, StaticAuthProvider, TokenInfo } from "@twurple/auth";
 import { ChatClient } from "@twurple/chat";
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import { EventEmitter, Listener } from '@d-fischer/typed-event-emitter';
+import { DefaultSettings, Settings, useSettings } from "@/composables/useSettings.ts";
 
 class Twitch extends EventEmitter {
     public onConnectStateChanged = this.registerEvent();
@@ -11,6 +12,7 @@ class Twitch extends EventEmitter {
     private chatClient: ChatClient | undefined = undefined;
     private tokenInfo: TokenInfo | undefined = undefined;
     private channel: string | undefined = undefined;
+    private settings: Settings = DefaultSettings;
     private isConnected = false;
     private isConnecting = false;
     private hasJoined = false;
@@ -40,8 +42,9 @@ class Twitch extends EventEmitter {
         return this.chatClient?.currentChannels.map(channel => channel.replace('#', '')) ?? [];
     }
 
-    public async connect(token: string, channel: string) {
+    public async connect(token: string, channel: string, settings: Settings) {
         try {
+            this.settings = settings;
             this.channel = channel;
             this.isConnecting = true;
             this.emit(this.onConnectStateChanged);
@@ -85,6 +88,8 @@ class Twitch extends EventEmitter {
 
                 setTimeout(() => {
                     this.emit(this.onJoinedStateChanged);
+
+                    this.sendWelcomeMessages();
                 }, 15);
             });
 
@@ -127,16 +132,27 @@ class Twitch extends EventEmitter {
         }
     }
 
+    public setSettings(settings: Settings) {
+        this.settings = settings;
+    }
+
     private resetState() {
         this.isConnected = false;
         this.isConnecting = false;
         this.hasJoined = false;
         this.isJoining = false;
         this.channel = undefined;
+        this.settings = DefaultSettings;
         this.tokenInfo = undefined;
         this.chatClient = undefined;
         this.emit(this.onConnectStateChanged);
         this.emit(this.onJoinedStateChanged);
+    }
+
+    private async sendWelcomeMessages() {
+        for (const message of this.settings.welcomeMessages) {
+            await this.chatClient!.say(this.channel!, message);
+        }
     }
 }
 
@@ -150,6 +166,7 @@ const twitch: Twitch = globalThis.twitch;
 export function useTwitch() {
     const {token} = useTwitchToken();
     const {username} = useTwitchUsername();
+    const {settings} = useSettings();
 
     const joined = ref(false);
     const joining = ref(false);
@@ -157,6 +174,10 @@ export function useTwitch() {
     const connecting = ref(false);
     const connectedAs = ref<string | undefined | null>(undefined);
     const joinedChannels = ref<string | undefined>(undefined);
+
+    watch(settings, (newSettings) => {
+        twitch.setSettings(newSettings);
+    });
 
     function syncState() {
         connected.value = twitch.connected;
@@ -169,7 +190,7 @@ export function useTwitch() {
 
     async function connect() {
         if (!twitch.connected && !twitch.connecting && token.value && username.value) {
-            await twitch.connect(token.value, username.value);
+            await twitch.connect(token.value, username.value, settings.value);
         }
     }
 
