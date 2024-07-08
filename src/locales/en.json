@@ -1,3 +1,47 @@
 {
-    "Hello World": "Hello World"
+    "locales": {
+        "nl": "Nederlands",
+        "en": "English",
+        "es": "Español"
+    },
+    "back": "Back",
+    "save": "Save",
+    "reset form": "Reset form",
+    "settings": {
+        "settings": "Settings",
+        "manage settings": "Manage the settings here",
+        "language": {
+            "label": "Language",
+            "description": "Changes the interface language"
+        },
+        "startup messages": {
+            "label": "Startup Message(s)",
+            "description": "Have the bot post one or more messages on startup.",
+            "configure": "Change messages",
+            "messages": "Messages",
+            "add message": "Add message",
+            "rules": {
+                "message required": "Please enter a valid message.",
+                "message length": "Message must not be longer than 500 characters."
+            }
+        },
+        "welcome messages": {
+            "label": "Welcome Message(s)",
+            "description": "Have the bot greet new users when they join the chat for the first time.",
+            "configure": "Configure",
+            "messages": "Messages",
+            "add message": "Add message",
+            "type": "When to send a welcome message",
+            "type first time": "The first time someone joins the chat ever.",
+            "type first time stream": "The first time someone joins the chat during the current stream.",
+            "interval": "Seconds between welcome messages",
+            "interval description": "How many seconds should there be between welcome messages?",
+            "interval hint": "{seconds} seconds",
+            "messages hint": "Use the {0} placeholder to mention the user",
+            "rules": {
+                "message required": "Please enter a valid message.",
+                "message length": "Message must not be longer than 500 characters."
+            }
+        }
+    }
 }

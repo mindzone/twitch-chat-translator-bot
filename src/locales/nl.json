@@ -1,3 +1,47 @@
 {
-    "Hello World": "Hallo Wereld"
+    "locales": {
+        "nl": "Nederlands",
+        "en": "English",
+        "es": "Español"
+    },
+    "back": "Terug",
+    "save": "Opslaan",
+    "reset form": "Formulier resetten",
+    "settings": {
+        "settings": "Instellingen",
+        "manage settings": "Beheer de instellingen hier",
+        "language": {
+            "label": "Taal",
+            "description": "Past de weergave taal aan"
+        },
+        "startup messages": {
+            "label": "Opstartbericht(en)",
+            "description": "Laat de bot bij het opstarten een of meer berichten plaatsen",
+            "configure": "Berichten aanpassen",
+            "messages": "Berichten",
+            "add message": "Bericht toevoegen",
+            "rules": {
+                "message required": "Voer een geldig bericht in",
+                "message length": "Het bericht mag niet langer zijn dan 500 karakters"
+            }
+        },
+        "welcome messages": {
+            "label": "Welkomstbericht(en)",
+            "description": "Laat de bot nieuwe gebruikers begroeten wanneer ze voor de eerste keer deelnemen aan de chat.",
+            "configure": "Instellen",
+            "messages": "Berichten",
+            "add message": "Bericht toevoegen",
+            "type": "Wanneer moet er een bericht worden gestuurd",
+            "type first time": "De eerste keer dat iemand praat in de chat",
+            "type first time stream": "De eerste keer dat iemand praat in de chat tijdens de huidige stream",
+            "interval": "Aantal seconden tussen welkomstberichten",
+            "interval description": "Hoeveel seconden moeten er tussen elk welkomstbericht zitten?",
+            "interval hint": "{seconds} seconden",
+            "messages hint": "Gebruik de {0} placeholder om de naam van de gebruiker te vermelden",
+            "rules": {
+                "message required": "Voer een geldig bericht in",
+                "message length": "Het bericht mag niet langer zijn dan 500 karakters"
+            }
+        }
+    }
 }

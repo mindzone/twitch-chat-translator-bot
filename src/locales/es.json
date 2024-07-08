@@ -1,0 +1,47 @@
+{
+    "locales": {
+        "nl": "Nederlands",
+        "en": "English",
+        "es": "Español"
+    },
+    "back": "Atrás",
+    "save": "Guardar",
+    "reset form": "Restablecer formulario",
+    "settings": {
+        "settings": "Ajustes",
+        "manage settings": "Administrar ajustes aquí",
+        "language": {
+            "label": "Idioma",
+            "description": "Cambia el idioma de la interfaz"
+        },
+        "startup messages": {
+            "label": "Mensaje(s) de inicio",
+            "description": "Hacer que el bot publique uno o más mensajes al inicio.",
+            "configure": "Cambiar mensajes",
+            "messages": "Mensajes",
+            "add message": "Agregar mensaje",
+            "rules": {
+                "message required": "Ingrese un mensaje válido.",
+                "message length": "El mensaje no debe tener más de 500 caracteres."
+            }
+        },
+        "welcome messages": {
+            "label": "Mensaje(s) de bienvenida",
+            "description": "Haga que el bot salude a los nuevos usuarios cuando se unan al chat por primera vez.",
+            "configure": "Configurar",
+            "messages": "Mensajes",
+            "add message": "Agregar mensaje",
+            "type": "¿Cuándo enviar un mensaje de bienvenida?",
+            "type first time": "La primera vez que alguien se une al chat.",
+            "type first time stream": "La primera vez que alguien se une al chat durante la transmisión actual.",
+            "interval": "Segundos entre mensajes de bienvenida",
+            "interval description": "¿Cuántos segundos debe haber entre mensajes de bienvenida?",
+            "interval hint": "{seconds} segundos",
+            "messages hint": "Utilice el marcador de posición {0} para mencionar al usuario",
+            "rules": {
+                "message required": "Ingrese un mensaje válido.",
+                "message length": "El mensaje no debe tener más de 500 caracteres."
+            }
+        }
+    }
+}

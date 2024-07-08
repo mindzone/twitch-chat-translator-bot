@@ -11,7 +11,9 @@ import { Button } from '@/components/ui/button';
 import { useSettings } from "@/composables/useSettings.ts";
 import { useToast } from '@/components/ui/toast/use-toast';
 import { IconChevronLeft, IconX } from '@tabler/icons-vue';
+import { useI18n } from "vue-i18n";
 
+const {t} = useI18n();
 const {settings} = useSettings();
 const {toast} = useToast();
 
@@ -20,9 +22,9 @@ const startupMessagesFormSchema = toTypedSchema(z.object({
         .array(
             z.object({
                 value: z
-                    .string({message: 'Please enter a valid message.'})
+                    .string({message: t('settings.startup messages.rules.message required')})
                     .max(500, {
-                        message: 'Message must not be longer than 500 characters.',
+                        message: t('settings.startup messages.rules.message length'),
                     }),
             }),
         ),
@@ -56,9 +58,9 @@ const onSubmit = handleSubmit((values) => {
     <div class="p-4 h-screen">
         <Card>
             <CardHeader>
-                <CardTitle>startup messages</CardTitle>
+                <CardTitle>{{ $t('settings.startup messages.label') }}</CardTitle>
                 <CardDescription class="mt-2">
-                    These messages will be posted to the chat when the bot starts.
+                    {{ $t('settings.startup messages.description') }}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -69,7 +71,7 @@ const onSubmit = handleSubmit((values) => {
                                 <FormField v-slot="{ componentField }" :name="`messages[${index}].value`">
                                     <FormItem>
                                         <FormLabel :class="cn(index !== 0 && 'sr-only')">
-                                            Messages
+                                            {{ $t('settings.startup messages.messages') }}
                                         </FormLabel>
                                         <div class="relative flex items-center">
                                             <FormControl>
@@ -92,14 +94,14 @@ const onSubmit = handleSubmit((values) => {
                                 variant="outline"
                                 @click="push({ value: '' })"
                             >
-                                Add message
+                                {{ $t('settings.startup messages.add message') }}
                             </Button>
                         </FieldArray>
                     </div>
 
                     <div class="flex gap-2 justify-start">
                         <Button type="submit">
-                            Save
+                            {{ $t('save') }}
                         </Button>
 
                         <Button
@@ -107,7 +109,7 @@ const onSubmit = handleSubmit((values) => {
                             variant="outline"
                             @click="resetForm"
                         >
-                            Reset form
+                            {{ $t('reset form') }}
                         </Button>
                     </div>
                 </form>
@@ -116,7 +118,7 @@ const onSubmit = handleSubmit((values) => {
         <Button as-child class="mt-2" variant="outline">
             <RouterLink to="/dashboard">
                 <IconChevronLeft :size="16" class="mr-1"/>
-                Back
+                {{ $t('back') }}
             </RouterLink>
         </Button>
     </div>

@@ -14,7 +14,9 @@ import { useToast } from '@/components/ui/toast/use-toast';
 import { IconChevronLeft, IconX } from '@tabler/icons-vue';
 import { Slider } from '@/components/ui/slider';
 import { Badge } from "@/components/ui/badge";
+import { useI18n } from "vue-i18n";
 
+const {t} = useI18n();
 const {settings} = useSettings();
 const {toast} = useToast();
 
@@ -70,16 +72,16 @@ const onSubmit = handleSubmit((values) => {
     <div class="p-4 h-screen">
         <Card>
             <CardHeader>
-                <CardTitle>Welcome messages</CardTitle>
+                <CardTitle>{{ $t('settings.welcome messages.label') }}</CardTitle>
                 <CardDescription class="mt-2">
-                    These messages will be posted to the chat when a user joins the chat.
+                    {{ $t('settings.welcome messages.description') }}
                 </CardDescription>
             </CardHeader>
             <CardContent>
                 <form class="space-y-8" @submit="onSubmit">
                     <FormField v-slot="{ componentField }" name="type" type="radio">
                         <FormItem class="space-y-3">
-                            <FormLabel>When to send a welcome message</FormLabel>
+                            <FormLabel>{{ $t('settings.welcome messages.type') }}</FormLabel>
                             <FormControl>
                                 <RadioGroup
                                     class="flex flex-col space-y-1"
@@ -90,7 +92,7 @@ const onSubmit = handleSubmit((values) => {
                                             <RadioGroupItem value="firstTime"/>
                                         </FormControl>
                                         <FormLabel class="font-normal">
-                                            The first time someone joins the chat ever.
+                                            {{ $t('settings.welcome messages.type first time') }}
                                         </FormLabel>
                                     </FormItem>
                                     <FormItem class="flex items-center space-x-3 space-y-0">
@@ -98,7 +100,7 @@ const onSubmit = handleSubmit((values) => {
                                             <RadioGroupItem value="firstTimeStream"/>
                                         </FormControl>
                                         <FormLabel class="font-normal">
-                                            The first time someone joins the chat during the current stream.
+                                            {{ $t('settings.welcome messages.type first time stream') }}
                                         </FormLabel>
                                     </FormItem>
                                 </RadioGroup>
@@ -109,7 +111,7 @@ const onSubmit = handleSubmit((values) => {
 
                     <FormField v-slot="{ componentField, value }" name="interval">
                         <FormItem>
-                            <FormLabel>Seconds between welcome messages</FormLabel>
+                            <FormLabel>{{ $t('settings.welcome messages.interval') }}</FormLabel>
                             <FormControl>
                                 <Slider
                                     :default-value="[30]"
@@ -119,8 +121,10 @@ const onSubmit = handleSubmit((values) => {
                                     v-bind="componentField"
                                 />
                                 <FormDescription class="flex justify-between">
-                                    <span>How many seconds should there be between welcome messages?</span>
-                                    <span>{{ value?.[0] }} seconds</span>
+                                    <span>{{ $t('settings.welcome messages.interval description') }}</span>
+                                    <span>{{
+                                            $t('settings.welcome messages.interval hint', {seconds: value?.[0]})
+                                        }}</span>
                                 </FormDescription>
                             </FormControl>
                             <FormMessage/>
@@ -133,12 +137,12 @@ const onSubmit = handleSubmit((values) => {
                                 <FormField v-slot="{ componentField }" :name="`messages[${index}].value`">
                                     <FormItem>
                                         <FormLabel :class="cn(index !== 0 && 'sr-only')">
-                                            Messages
+                                            {{ $t('settings.welcome messages.messages') }}
                                         </FormLabel>
                                         <FormDescription :class="cn(index !== 0 && 'sr-only')">
-                                            Use the
-                                            <Badge variant="secondary">%user</Badge>
-                                            placeholder to mention the user
+                                            <i18n-t keypath="settings.welcome messages.messages hint">
+                                                <Badge variant="secondary">%user</Badge>
+                                            </i18n-t>
                                         </FormDescription>
                                         <div class="relative flex items-center">
                                             <FormControl>
@@ -161,14 +165,14 @@ const onSubmit = handleSubmit((values) => {
                                 variant="outline"
                                 @click="push({ value: '' })"
                             >
-                                Add message
+                                {{ $t('settings.welcome messages.add message') }}
                             </Button>
                         </FieldArray>
                     </div>
 
                     <div class="flex gap-2 justify-start">
                         <Button type="submit">
-                            Save
+                            {{ $t('save') }}
                         </Button>
 
                         <Button
@@ -176,7 +180,7 @@ const onSubmit = handleSubmit((values) => {
                             variant="outline"
                             @click="resetForm"
                         >
-                            Reset form
+                            {{ $t('reset form') }}
                         </Button>
                     </div>
                 </form>
@@ -185,7 +189,7 @@ const onSubmit = handleSubmit((values) => {
         <Button as-child class="mt-2" variant="outline">
             <RouterLink to="/dashboard">
                 <IconChevronLeft :size="16" class="mr-1"/>
-                Back
+                {{ $t('back') }}
             </RouterLink>
         </Button>
     </div>
