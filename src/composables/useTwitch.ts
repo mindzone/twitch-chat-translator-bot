@@ -177,7 +177,7 @@ class Twitch extends EventEmitter {
 
         this.welcomedUsers.add(message.userInfo.displayName);
 
-        if (!this.preventWelcomeMessage) {
+        if (this.preventWelcomeMessage) {
             return;
         }
 
