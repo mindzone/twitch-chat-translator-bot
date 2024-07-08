@@ -28,7 +28,8 @@ const formSchema = toTypedSchema(z.object({
 const {isFieldDirty, handleSubmit, isSubmitting} = useForm({
     validationSchema: formSchema,
     initialValues: {
-        username: username.value
+        token: token.value,
+        username: username.value,
     }
 });
 
