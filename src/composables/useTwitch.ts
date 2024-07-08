@@ -113,7 +113,12 @@ class Twitch extends EventEmitter {
     }
 }
 
-const twitch = new Twitch();
+// "hack" to preserve the Twitch instance during local development and hot-reloading.
+// @fixme there probably is a better way but for now this will do.
+/* @ts-ignore */
+globalThis.twitch ??= new Twitch();
+/* @ts-ignore */
+const twitch = globalThis.twitch;
 
 export function useTwitch() {
     const {token} = useTwitchToken();
