@@ -8,14 +8,23 @@ import { Input } from '@/components/ui/input';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useSettings } from "@/composables/useSettings.ts";
 import { useToast } from '@/components/ui/toast/use-toast';
 import { IconChevronLeft, IconX } from '@tabler/icons-vue';
+import { Slider } from '@/components/ui/slider';
+import { Badge } from "@/components/ui/badge";
 
 const {settings} = useSettings();
 const {toast} = useToast();
 
 const welcomeMessagesFormSchema = toTypedSchema(z.object({
+    type: z.enum(['firstTime', 'firstTimeStream'], {
+        required_error: 'You need to select a type.',
+    }),
+    interval: z.array(
+        z.number().min(0).max(600),
+    ),
     messages: z
         .array(
             z.object({
@@ -32,6 +41,8 @@ const {handleSubmit, resetForm} = useForm({
     validationSchema: welcomeMessagesFormSchema,
     initialValues: {
         messages: settings.value.welcomeMessages.map(message => ({value: message})),
+        interval: [settings.value.intervalBetweenWelcomeMessages],
+        type: settings.value.welcomeMessageSendWhen,
     },
 });
 
@@ -40,6 +51,9 @@ const onSubmit = handleSubmit((values) => {
         .filter(message => message.value.trim() !== '')
         .map(message => message.value);
 
+    settings.value.intervalBetweenWelcomeMessages = values.interval[0] ?? 30;
+    settings.value.welcomeMessageSendWhen = values.type;
+
     resetForm({
         values: {
             messages: values.messages
@@ -47,7 +61,7 @@ const onSubmit = handleSubmit((values) => {
     });
 
     toast({
-        title: 'Messages saved',
+        title: 'Settings saved',
     });
 });
 </script>
@@ -58,11 +72,61 @@ const onSubmit = handleSubmit((values) => {
             <CardHeader>
                 <CardTitle>Welcome messages</CardTitle>
                 <CardDescription class="mt-2">
-                    These messages will be posted to the chat when the bot starts.
+                    These messages will be posted to the chat when a user joins the chat.
                 </CardDescription>
             </CardHeader>
             <CardContent>
                 <form class="space-y-8" @submit="onSubmit">
+                    <FormField v-slot="{ componentField }" name="type" type="radio">
+                        <FormItem class="space-y-3">
+                            <FormLabel>When to send a welcome message</FormLabel>
+                            <FormControl>
+                                <RadioGroup
+                                    class="flex flex-col space-y-1"
+                                    v-bind="componentField"
+                                >
+                                    <FormItem class="flex items-center space-x-3 space-y-0">
+                                        <FormControl>
+                                            <RadioGroupItem value="firstTime"/>
+                                        </FormControl>
+                                        <FormLabel class="font-normal">
+                                            The first time someone joins the chat ever.
+                                        </FormLabel>
+                                    </FormItem>
+                                    <FormItem class="flex items-center space-x-3 space-y-0">
+                                        <FormControl>
+                                            <RadioGroupItem value="firstTimeStream"/>
+                                        </FormControl>
+                                        <FormLabel class="font-normal">
+                                            The first time someone joins the chat during the current stream.
+                                        </FormLabel>
+                                    </FormItem>
+                                </RadioGroup>
+                            </FormControl>
+                            <FormMessage/>
+                        </FormItem>
+                    </FormField>
+
+                    <FormField v-slot="{ componentField, value }" name="interval">
+                        <FormItem>
+                            <FormLabel>Seconds between welcome messages</FormLabel>
+                            <FormControl>
+                                <Slider
+                                    :default-value="[30]"
+                                    :max="600"
+                                    :min="0"
+                                    :step="5"
+                                    v-bind="componentField"
+                                />
+                                <FormDescription class="flex justify-between">
+                                    <span>How many seconds should there be between welcome messages?</span>
+                                    <span>{{ value?.[0] }} seconds</span>
+                                </FormDescription>
+                            </FormControl>
+                            <FormMessage/>
+                        </FormItem>
+                    </FormField>
+
                     <div>
                         <FieldArray v-slot="{ fields, push, remove }" name="messages">
                             <div v-for="(field, index) in fields" :key="`messages-${field.key}`">
@@ -72,7 +136,9 @@ const onSubmit = handleSubmit((values) => {
                                             Messages
                                         </FormLabel>
                                         <FormDescription :class="cn(index !== 0 && 'sr-only')">
-                                            Description needed or not needed?
+                                            Use the
+                                            <Badge variant="secondary">%user</Badge>
+                                            placeholder to mention the user
                                         </FormDescription>
                                         <div class="relative flex items-center">
                                             <FormControl>
