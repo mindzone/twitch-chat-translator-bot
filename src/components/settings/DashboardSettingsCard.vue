@@ -23,7 +23,7 @@ const {settings} = useSettings();
                     </span>
                     <div v-if="settings.postWelcomeMessage">
                         <Button as-child class="p-0" variant="link">
-                            <RouterLink to="/getting-started">
+                            <RouterLink to="/settings/welcome-messages">
                                 Change messages
                             </RouterLink>
                         </Button>
