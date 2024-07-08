@@ -89,7 +89,7 @@ class Twitch extends EventEmitter {
                 setTimeout(() => {
                     this.emit(this.onJoinedStateChanged);
 
-                    this.sendWelcomeMessages();
+                    this.sendStartupMessages();
                 }, 15);
             });
 
@@ -149,8 +149,8 @@ class Twitch extends EventEmitter {
         this.emit(this.onJoinedStateChanged);
     }
 
-    private async sendWelcomeMessages() {
-        for (const message of this.settings.welcomeMessages) {
+    private async sendStartupMessages() {
+        for (const message of this.settings.startupMessages) {
             await this.chatClient!.say(this.channel!, message);
         }
     }

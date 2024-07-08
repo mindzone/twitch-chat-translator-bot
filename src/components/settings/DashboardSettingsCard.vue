@@ -17,14 +17,30 @@ const {settings} = useSettings();
         <CardContent class="grid gap-6">
             <div class="flex items-center justify-between space-x-2">
                 <Label class="flex flex-col space-y-1" for="postWelcomeMessage">
-                    <span>Welcome Message(s)</span>
+                    <span>Startup Message(s)</span>
                     <span class="font-normal leading-snug text-muted-foreground">
                         Have the bot post one or more messages on startup.
                     </span>
                     <div v-if="settings.postWelcomeMessage">
                         <Button as-child class="p-0" variant="link">
-                            <RouterLink to="/settings/welcome-messages">
+                            <RouterLink to="/settings/startup-messages">
                                 Change messages
+                            </RouterLink>
+                        </Button>
+                    </div>
+                </Label>
+                <Switch id="postWelcomeMessage" v-model:checked="settings.postWelcomeMessage"/>
+            </div>
+            <div class="flex items-center justify-between space-x-2">
+                <Label class="flex flex-col space-y-1" for="postWelcomeMessage">
+                    <span>Welcome Message(s)</span>
+                    <span class="font-normal leading-snug text-muted-foreground">
+                        Have the bot greet new users when they join the chat for the first time.
+                    </span>
+                    <div v-if="settings.postWelcomeMessage">
+                        <Button as-child class="p-0" variant="link">
+                            <RouterLink to="/settings/welcome-messages">
+                                Configure
                             </RouterLink>
                         </Button>
                     </div>
