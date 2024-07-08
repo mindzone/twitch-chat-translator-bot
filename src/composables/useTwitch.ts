@@ -119,6 +119,10 @@ class Twitch extends EventEmitter {
 
     public async join() {
         if (this.channel) {
+            this.hasJoined = false;
+            this.isJoining = true;
+
+            this.emit(this.onJoinedStateChanged);
             await this.chatClient?.join(this.channel);
         }
     }
@@ -141,7 +145,7 @@ class Twitch extends EventEmitter {
 /* @ts-ignore */
 globalThis.twitch ??= new Twitch();
 /* @ts-ignore */
-const twitch = globalThis.twitch;
+const twitch: Twitch = globalThis.twitch;
 
 export function useTwitch() {
     const {token} = useTwitchToken();
