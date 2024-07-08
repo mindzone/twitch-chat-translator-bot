@@ -74,11 +74,22 @@ class Twitch extends EventEmitter {
                 this.hasJoined = false;
                 this.isJoining = false;
 
-                this.emit(this.onJoinedStateChanged);
+                setTimeout(() => {
+                    this.emit(this.onJoinedStateChanged);
+                }, 15);
             });
 
             this.chatClient.onJoin(() => {
                 this.hasJoined = true;
+                this.isJoining = false;
+
+                setTimeout(() => {
+                    this.emit(this.onJoinedStateChanged);
+                }, 15);
+            });
+
+            this.chatClient.onJoinFailure(() => {
+                this.hasJoined = false;
                 this.isJoining = false;
 
                 setTimeout(() => {
