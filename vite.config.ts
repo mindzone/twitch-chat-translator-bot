@@ -3,10 +3,20 @@ import vue from "@vitejs/plugin-vue";
 import tailwind from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 import path from 'node:path';
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-    plugins: [vue()],
+    plugins: [
+        vue(),
+        VueI18nPlugin({
+            /* options */
+            // locale messages resource pre-compile option
+            include: [path.resolve(__dirname, './src/locales/**')],
+            escapeHtml: false,
+            strictMessage: false,
+        }),
+    ],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),

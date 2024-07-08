@@ -7,6 +7,7 @@ export interface Settings {
     startupMessages: string[];
     intervalBetweenWelcomeMessages: number;
     welcomeMessageSendWhen: 'firstTime' | 'firstTimeStream';
+    language: string;
 }
 
 export const DefaultSettings: Settings = {
@@ -19,7 +20,8 @@ export const DefaultSettings: Settings = {
         'Welcome %user, This channel uses a translator. Feel free to speak your native language and the bot will translate it!'
     ],
     intervalBetweenWelcomeMessages: 30,
-    welcomeMessageSendWhen: 'firstTime'
+    welcomeMessageSendWhen: 'firstTime',
+    language: navigator.language.split('-')[0]
 }
 
 export function useSettings() {

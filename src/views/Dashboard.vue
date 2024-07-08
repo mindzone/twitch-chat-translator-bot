@@ -10,6 +10,7 @@ const twitch = useTwitch();
     <div class="grid grid-cols-2 grid-rows-2 gap-4 p-4 h-screen">
         <ConnectionStateCard/>
         <DashboardSettingsCard class="row-span-2"/>
+        {{ $t('Hello World') }}
     </div>
 </template>
 
