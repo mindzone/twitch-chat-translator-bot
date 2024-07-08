@@ -69,7 +69,12 @@ const {connected, connecting, joined, joining, connect, disconnect, join, connec
                 <IconLoader v-if="joining" :size="24" class="animate-spin"/>
                 Join
             </Button>
-            <Button v-if="connected" @click="disconnect">Disconnect</Button>
+            <Button
+                v-if="connected"
+                class="hover:text-destructive-foreground hover:bg-destructive/90"
+                @click="disconnect"
+            >Disconnect
+            </Button>
         </CardFooter>
     </Card>
 </template>
