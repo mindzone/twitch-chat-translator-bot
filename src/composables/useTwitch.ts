@@ -1,6 +1,6 @@
 import { useTwitchToken } from "@/composables/useTwitchToken.ts";
 import { useTwitchUsername } from "@/composables/useTwitchUsername.ts";
-import { getTokenInfo, StaticAuthProvider } from "@twurple/auth";
+import { getTokenInfo, StaticAuthProvider, TokenInfo } from "@twurple/auth";
 import { ChatClient } from "@twurple/chat";
 import { onMounted, onUnmounted, ref } from "vue";
 import { EventEmitter, Listener } from '@d-fischer/typed-event-emitter';
@@ -9,6 +9,7 @@ class Twitch extends EventEmitter {
     public onConnectStateChanged = this.registerEvent();
     public onJoinedStateChanged = this.registerEvent();
     private chatClient: ChatClient | undefined = undefined;
+    private tokenInfo: TokenInfo | undefined = undefined;
     private channel: string | undefined = undefined;
     private isConnected = false;
     private isConnecting = false;
@@ -31,15 +32,23 @@ class Twitch extends EventEmitter {
         return this.isJoining;
     }
 
+    public get connectedAs() {
+        return this.tokenInfo?.userName;
+    }
+
+    public get joinedChannels() {
+        return this.chatClient?.currentChannels.map(channel => channel.replace('#', '')) ?? [];
+    }
+
     public async connect(token: string, channel: string) {
         try {
             this.channel = channel;
             this.isConnecting = true;
             this.emit(this.onConnectStateChanged);
 
-            const info = await getTokenInfo(token);
+            this.tokenInfo = await getTokenInfo(token);
             this.chatClient = new ChatClient({
-                authProvider: new StaticAuthProvider(info.clientId, token, info.scopes),
+                authProvider: new StaticAuthProvider(this.tokenInfo.clientId, token, this.tokenInfo.scopes),
                 isAlwaysMod: false,
                 channels: [channel]
             });
@@ -72,7 +81,9 @@ class Twitch extends EventEmitter {
                 this.hasJoined = true;
                 this.isJoining = false;
 
-                this.emit(this.onJoinedStateChanged);
+                setTimeout(() => {
+                    this.emit(this.onJoinedStateChanged);
+                }, 15);
             });
 
             this.chatClient.onMessage((channel, user, text, message) => {
@@ -107,6 +118,7 @@ class Twitch extends EventEmitter {
         this.hasJoined = false;
         this.isJoining = false;
         this.channel = undefined;
+        this.tokenInfo = undefined;
         this.chatClient = undefined;
         this.emit(this.onConnectStateChanged);
         this.emit(this.onJoinedStateChanged);
@@ -128,12 +140,16 @@ export function useTwitch() {
     const joining = ref(false);
     const connected = ref(false);
     const connecting = ref(false);
+    const connectedAs = ref<string | undefined | null>(undefined);
+    const joinedChannels = ref<string | undefined>(undefined);
 
     function syncState() {
         connected.value = twitch.connected;
         connecting.value = twitch.connecting;
         joined.value = twitch.joined;
         joining.value = twitch.joining;
+        connectedAs.value = twitch.connectedAs;
+        joinedChannels.value = twitch.joinedChannels.join(', ');
     }
 
     async function connect() {
@@ -176,5 +192,7 @@ export function useTwitch() {
         connect,
         disconnect,
         join,
+        connectedAs,
+        joinedChannels
     };
 }

@@ -3,9 +3,10 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useTwitch } from "@/composables/useTwitch.ts";
-import { IconCircleCheck, IconCircleX, IconLoader } from "@tabler/icons-vue";
+import { IconCircleCheck, IconCircleX, IconEdit, IconLoader } from "@tabler/icons-vue";
+import Tooltip from "@/components/Tooltip.vue";
 
-const {connected, connecting, joined, joining, connect, disconnect, join} = useTwitch();
+const {connected, connecting, joined, joining, connect, disconnect, join, connectedAs, joinedChannels} = useTwitch();
 </script>
 
 <template>
@@ -22,7 +23,19 @@ const {connected, connecting, joined, joining, connect, disconnect, join} = useT
                 </span>
                 <Label class="flex flex-col space-y-1">
                     <span>Connected</span>
+                    <span v-if="connected" class="font-normal leading-snug text-muted-foreground">
+                        Connected as: {{ connectedAs }}
+                    </span>
                 </Label>
+                <div v-if="connected" class="grow flex justify-end">
+                    <Tooltip tooltip="Click to change">
+                        <Button as-child class="ml-auto w-8 h-8" variant="ghost" @click="disconnect">
+                            <RouterLink to="/getting-started">
+                                <IconEdit :size="16"/>
+                            </RouterLink>
+                        </Button>
+                    </Tooltip>
+                </div>
             </div>
             <div class="flex items-center justify-start space-x-2">
                 <span>
@@ -32,7 +45,19 @@ const {connected, connecting, joined, joining, connect, disconnect, join} = useT
                 </span>
                 <Label class="flex flex-col space-y-1">
                     <span>Joined</span>
+                    <span v-if="joined" class="font-normal leading-snug text-muted-foreground break-all">
+                        Joined: {{ joinedChannels }}
+                    </span>
                 </Label>
+                <div v-if="joined" class="grow flex justify-end">
+                    <Tooltip tooltip="Click to change">
+                        <Button as-child class="ml-auto w-8 h-8" variant="ghost" @click="disconnect">
+                            <RouterLink to="/getting-started">
+                                <IconEdit :size="16"/>
+                            </RouterLink>
+                        </Button>
+                    </Tooltip>
+                </div>
             </div>
         </CardContent>
         <CardFooter class="space-x-2">
