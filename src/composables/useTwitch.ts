@@ -1,7 +1,7 @@
 import { useTwitchToken } from "@/composables/useTwitchToken.ts";
 import { useTwitchUsername } from "@/composables/useTwitchUsername.ts";
 import { getTokenInfo, StaticAuthProvider, TokenInfo } from "@twurple/auth";
-import { ChatClient } from "@twurple/chat";
+import { ChatClient, ChatMessage } from "@twurple/chat";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { EventEmitter, Listener } from '@d-fischer/typed-event-emitter';
 import { DefaultSettings, Settings, useSettings } from "@/composables/useSettings.ts";
@@ -13,6 +13,9 @@ class Twitch extends EventEmitter {
     private tokenInfo: TokenInfo | undefined = undefined;
     private channel: string | undefined = undefined;
     private settings: Settings = DefaultSettings;
+    private welcomedUsers = new Set<string>();
+    private preventWelcomeMessage = false;
+
     private isConnected = false;
     private isConnecting = false;
     private hasJoined = false;
@@ -105,7 +108,9 @@ class Twitch extends EventEmitter {
             this.chatClient.onMessage((channel, user, text, message) => {
                 console.log(`Received a message from ${user} in ${channel}: ${text}`);
 
-                console.log({message})
+                console.log({message});
+
+                this.sendWelcomeMessages(message);
             })
 
             this.chatClient.connect();
@@ -145,6 +150,8 @@ class Twitch extends EventEmitter {
         this.settings = DefaultSettings;
         this.tokenInfo = undefined;
         this.chatClient = undefined;
+        this.welcomedUsers = new Set<string>();
+        this.preventWelcomeMessage = false;
         this.emit(this.onConnectStateChanged);
         this.emit(this.onJoinedStateChanged);
     }
@@ -152,6 +159,37 @@ class Twitch extends EventEmitter {
     private async sendStartupMessages() {
         for (const message of this.settings.startupMessages) {
             await this.chatClient!.say(this.channel!, message);
+        }
+    }
+
+    private async sendWelcomeMessages(message: ChatMessage) {
+        if (!this.settings.postWelcomeMessage) {
+            return;
+        }
+
+        if (this.settings.welcomeMessageSendWhen === 'firstTime' && !message.isFirst) {
+            return;
+        }
+
+        if (this.settings.welcomeMessageSendWhen === 'firstTimeStream' && this.welcomedUsers.has(message.userInfo.displayName)) {
+            return;
+        }
+
+        this.welcomedUsers.add(message.userInfo.displayName);
+
+        if (!this.preventWelcomeMessage) {
+            return;
+        }
+
+        if (this.settings.intervalBetweenWelcomeMessages !== 0) {
+            this.preventWelcomeMessage = true;
+            setTimeout(() => {
+                this.preventWelcomeMessage = false;
+            }, this.settings.intervalBetweenWelcomeMessages * 1000);
+        }
+
+        for (const welcomeMessage of this.settings.welcomeMessages) {
+            await this.chatClient!.say(this.channel!, welcomeMessage.replaceAll('%user', message.userInfo.displayName));
         }
     }
 }
