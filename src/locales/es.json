@@ -1,15 +1,17 @@
 {
     "locales": {
-        "nl": "Nederlands",
-        "en": "English",
+        "nl": "Neerlandés",
+        "en": "Inglés",
         "es": "Español"
     },
     "back": "Atrás",
     "save": "Guardar",
     "reset form": "Restablecer formulario",
+    "submitting": "Cargando",
     "settings": {
         "settings": "Ajustes",
         "manage settings": "Administrar ajustes aquí",
+        "more settings": "Más ajustes",
         "language": {
             "label": "Idioma",
             "description": "Cambia el idioma de la interfaz"
@@ -20,6 +22,7 @@
             "configure": "Cambiar mensajes",
             "messages": "Mensajes",
             "add message": "Agregar mensaje",
+            "settings saved": "Mensajes guardados",
             "rules": {
                 "message required": "Ingrese un mensaje válido.",
                 "message length": "El mensaje no debe tener más de 500 caracteres."
@@ -38,10 +41,50 @@
             "interval description": "¿Cuántos segundos debe haber entre mensajes de bienvenida?",
             "interval hint": "{seconds} segundos",
             "messages hint": "Utilice el marcador de posición {0} para mencionar al usuario",
+            "settings saved": "Ajustes guardados",
             "rules": {
                 "message required": "Ingrese un mensaje válido.",
-                "message length": "El mensaje no debe tener más de 500 caracteres."
+                "message length": "El mensaje no debe tener más de 500 caracteres.",
+                "type invalid": "Seleccione un tipo válido"
             }
+        }
+    },
+    "twitch": {
+        "connected": "Conectado",
+        "connected as": "Conectado como: {name}",
+        "joined": "Unido",
+        "joined in": "Unido a: {channels}",
+        "connect": "Conectar",
+        "join": "Unirse",
+        "disconnect": "Desconectar"
+    },
+    "getting started": {
+        "getting started": "Empezar",
+        "introduction": "Para comenzar a usar el Bot traductor, deberá proporcionar un token de acceso de Bot de Twitch que permita que el bot se conecte a Twitch.",
+        "token help": "La forma más fácil de obtener un token es generando un <br> \"<b>Token de chat de bot</b>\" usando el Generador de tokens de Twitch.",
+        "open token generator": "Ir al Generador de tokens de Twitch",
+        "token": "Token",
+        "token hint": "Nunca compartas este token con nadie",
+        "channel": "Canal de Twitch",
+        "channel hint": "El nombre de tu canal de Twitch",
+        "continue": "Continuar",
+        "successfully connected": {
+            "title": "Conectado exitosamente",
+            "description": "Conectado como {name}"
+        },
+        "invalid scopes dialog": {
+            "title": "Alcances de token no válidos",
+            "description": "El token que ingresó es válido, pero le falta uno de los siguientes alcances: {0} {1}. Asegúrese de haber habilitado estos permisos al generar su token.",
+            "close": "Cerrar"
+        },
+        "invalid token dialog": {
+            "title": "Token no válido",
+            "description": "El token que ingresó no es válido. Asegúrate de haber ingresado el token correcto.",
+            "close": "Cerrar"
+        },
+        "rules": {
+            "token required": "Ingrese un token válido.",
+            "channel required": "Ingrese su canal."
         }
     }
 }

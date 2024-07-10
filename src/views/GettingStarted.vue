@@ -115,7 +115,7 @@ const onSubmit = handleSubmit(async (values) => {
 
                     <Button :disabled="isSubmitting" type="submit">
                         <IconLoader v-if="isSubmitting" :size="14" class="mr-1 animate-spin" color="currentColor"/>
-                        <span v-if="isSubmitting">{{ $t('getting started.submitting') }}</span>
+                        <span v-if="isSubmitting">{{ $t('submitting') }}</span>
                         <span v-else>{{ $t('getting started.continue') }}</span>
                     </Button>
                 </form>
