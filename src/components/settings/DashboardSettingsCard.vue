@@ -69,7 +69,7 @@ const {settings} = useSettings();
         </CardContent>
         <CardFooter>
             <Button class="w-full" variant="outline">
-                More Settings
+                {{ $t('settings.more settings') }}
             </Button>
         </CardFooter>
     </Card>

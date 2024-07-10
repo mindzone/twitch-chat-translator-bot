@@ -22,7 +22,8 @@ const {toast} = useToast();
 
 const welcomeMessagesFormSchema = toTypedSchema(z.object({
     type: z.enum(['firstTime', 'firstTimeStream'], {
-        required_error: 'You need to select a type.',
+        required_error: t('settings.welcome messages.rules.type invalid'),
+        invalid_type_error: t('settings.welcome messages.rules.type invalid'),
     }),
     interval: z.array(
         z.number().min(0).max(600),
@@ -31,9 +32,9 @@ const welcomeMessagesFormSchema = toTypedSchema(z.object({
         .array(
             z.object({
                 value: z
-                    .string({message: 'Please enter a valid message.'})
+                    .string({message: t('settings.welcome messages.rules.message required')})
                     .max(500, {
-                        message: 'Message must not be longer than 500 characters.',
+                        message: t('settings.welcome messages.rules.message length'),
                     }),
             }),
         ),
@@ -63,7 +64,7 @@ const onSubmit = handleSubmit((values) => {
     });
 
     toast({
-        title: 'Settings saved',
+        title: t('settings.welcome messages.settings saved'),
     });
 });
 </script>

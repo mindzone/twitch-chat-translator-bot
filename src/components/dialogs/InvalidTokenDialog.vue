@@ -16,13 +16,15 @@ const model = defineModel({default: true})
     <AlertDialog :open="model">
         <AlertDialogContent>
             <AlertDialogHeader>
-                <AlertDialogTitle>Invalid Token</AlertDialogTitle>
+                <AlertDialogTitle>{{ $t('getting started.invalid token dialog.title') }}</AlertDialogTitle>
                 <AlertDialogDescription>
-                    Make sure you have entered the correct token.
+                    {{ $t('getting started.invalid token dialog.description') }}
                 </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-                <AlertDialogCancel @click="model = false">Close</AlertDialogCancel>
+                <AlertDialogCancel @click="model = false">
+                    {{ $t('getting started.invalid token dialog.close') }}
+                </AlertDialogCancel>
             </AlertDialogFooter>
         </AlertDialogContent>
     </AlertDialog>

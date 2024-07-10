@@ -7,9 +7,11 @@
     "back": "Back",
     "save": "Save",
     "reset form": "Reset form",
+    "submitting": "Loading",
     "settings": {
         "settings": "Settings",
         "manage settings": "Manage the settings here",
+        "more settings": "More settings",
         "language": {
             "label": "Language",
             "description": "Changes the interface language"
@@ -20,6 +22,7 @@
             "configure": "Change messages",
             "messages": "Messages",
             "add message": "Add message",
+            "settings saved": "Messages saved",
             "rules": {
                 "message required": "Please enter a valid message.",
                 "message length": "Message must not be longer than 500 characters."
@@ -38,10 +41,50 @@
             "interval description": "How many seconds should there be between welcome messages?",
             "interval hint": "{seconds} seconds",
             "messages hint": "Use the {0} placeholder to mention the user",
+            "settings saved": "Settings saved",
             "rules": {
                 "message required": "Please enter a valid message.",
-                "message length": "Message must not be longer than 500 characters."
+                "message length": "Message must not be longer than 500 characters.",
+                "type invalid": "Please select a valid type"
             }
+        }
+    },
+    "twitch": {
+        "connected": "Connected",
+        "connected as": "Connected as: {name}",
+        "joined": "Joined",
+        "joined in": "Joined: {channels}",
+        "connect": "Connect",
+        "join": "Join",
+        "disconnect": "Disconnect"
+    },
+    "getting started": {
+        "getting started": "Getting Started",
+        "introduction": "To get started using the Translator Bot you will need to provide a Twitch Bot Access token that allows the bot to connect to Twitch.",
+        "token help": "The easiest way to obtain a token is by generating a <br> \"<b>Bot Chat Token</b>\" using the Twitch Token Generator.",
+        "open token generator": "Go to the Twitch Token Generator",
+        "token": "Token",
+        "token hint": "Never share this token with anyone",
+        "channel": "Twitch channel",
+        "channel hint": "The name of your Twitch Channel",
+        "continue": "Continue",
+        "successfully connected": {
+            "title": "Successfully connected",
+            "description": "Connected as {name}"
+        },
+        "invalid scopes dialog": {
+            "title": "Invalid Token Scopes",
+            "description": "The token you have entered is valid, but it is missing one of the following scopes: {0} {1}. Make sure you have enabled these permissions when generating your token.",
+            "close": "Close"
+        },
+        "invalid token dialog": {
+            "title": "Invalid Token",
+            "description": "The token you have entered is invalid. Make sure you have entered the correct token.",
+            "close": "Close"
+        },
+        "rules": {
+            "token required": "Please enter a valid token.",
+            "channel required": "Please enter your channel."
         }
     }
 }

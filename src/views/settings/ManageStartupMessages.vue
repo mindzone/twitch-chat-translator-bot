@@ -49,7 +49,7 @@ const onSubmit = handleSubmit((values) => {
     });
 
     toast({
-        title: 'Messages saved',
+        title: t('settings.startup messages.settings saved'),
     });
 });
 </script>

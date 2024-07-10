@@ -22,9 +22,9 @@ const {connected, connecting, joined, joining, connect, disconnect, join, connec
                     <IconCircleX v-else :size="24" class="text-red-500"/>
                 </span>
                 <Label class="flex flex-col space-y-1">
-                    <span>Connected</span>
+                    <span>{{ $t('twitch.connected') }}</span>
                     <span v-if="connected" class="font-normal leading-snug text-muted-foreground">
-                        Connected as: {{ connectedAs }}
+                        {{ $t('twitch.connected as', {name: connectedAs}) }}
                     </span>
                 </Label>
                 <div v-if="connected" class="grow flex justify-end">
@@ -44,9 +44,9 @@ const {connected, connecting, joined, joining, connect, disconnect, join, connec
                     <IconCircleX v-else :size="24" class="text-red-500"/>
                 </span>
                 <Label class="flex flex-col space-y-1">
-                    <span>Joined</span>
+                    <span>{{ $t('twitch.joined') }}</span>
                     <span v-if="joined" class="font-normal leading-snug text-muted-foreground break-all">
-                        Joined: {{ joinedChannels }}
+                        {{ $t('twitch.joined in', {channels: joinedChannels}) }}
                     </span>
                 </Label>
                 <div v-if="joined" class="grow flex justify-end">
@@ -63,17 +63,18 @@ const {connected, connecting, joined, joining, connect, disconnect, join, connec
         <CardFooter class="space-x-2">
             <Button v-if="!connected" :disabled="connecting" @click="connect">
                 <IconLoader v-if="connecting" :size="24" class="animate-spin"/>
-                Connect
+                {{ $t('twitch.connect') }}
             </Button>
             <Button v-if="connected && !joined" :disabled="joining" @click="join">
                 <IconLoader v-if="joining" :size="24" class="animate-spin"/>
-                Join
+                {{ $t('twitch.join') }}
             </Button>
             <Button
                 v-if="connected"
                 class="hover:text-destructive-foreground hover:bg-destructive/90"
                 @click="disconnect"
-            >Disconnect
+            >
+                {{ $t('twitch.disconnect') }}
             </Button>
         </CardFooter>
     </Card>

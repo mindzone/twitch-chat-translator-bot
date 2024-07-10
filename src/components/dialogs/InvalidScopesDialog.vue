@@ -17,16 +17,18 @@ const model = defineModel({default: true})
     <AlertDialog :open="model">
         <AlertDialogContent>
             <AlertDialogHeader>
-                <AlertDialogTitle>Invalid Token Scopes</AlertDialogTitle>
+                <AlertDialogTitle>{{ $t('getting started.invalid scopes dialog.title') }}</AlertDialogTitle>
                 <AlertDialogDescription>
-                    The token you have entered is valid, but it is missing one of the following scopes:
-                    <Badge>chat:edit</Badge>
-                    <Badge>chat:read</Badge>
-                    . Make sure you have enabled these permissions when generating your token.
+                    <i18n-t keypath="getting started.invalid scopes dialog.description">
+                        <Badge>chat:edit</Badge>
+                        <Badge>chat:read</Badge>
+                    </i18n-t>
                 </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-                <AlertDialogCancel @click="model = false">Close</AlertDialogCancel>
+                <AlertDialogCancel @click="model = false">
+                    {{ $t('getting started.invalid scopes dialog.close') }}
+                </AlertDialogCancel>
             </AlertDialogFooter>
         </AlertDialogContent>
     </AlertDialog>

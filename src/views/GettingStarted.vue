@@ -14,15 +14,17 @@ import { useToast } from '@/components/ui/toast/use-toast';
 import InvalidScopesDialog from "@/components/dialogs/InvalidScopesDialog.vue";
 import { useTwitchUsername } from "@/composables/useTwitchUsername.ts";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
 const {username} = useTwitchUsername();
 const router = useRouter();
 const {token, getTokenInfo} = useTwitchToken();
 const {toast} = useToast();
+const {t} = useI18n();
 
 const formSchema = toTypedSchema(z.object({
-    token: z.string(),
-    username: z.string(),
+    token: z.string().min(1, t('getting started.rules.token required')),
+    username: z.string().min(1, t('getting started.rules.channel required')),
 }));
 
 const {isFieldDirty, handleSubmit, isSubmitting} = useForm({
@@ -53,8 +55,8 @@ const onSubmit = handleSubmit(async (values) => {
         token.value = values.token;
 
         toast({
-            title: 'Successfully connected',
-            description: `Connected as ${info.userName}`,
+            title: t('getting started.successfully connected.title'),
+            description: t('getting started.successfully connected.description', {name: info.userName}),
         });
 
         await router.replace({path: '/dashboard'});
@@ -69,15 +71,14 @@ const onSubmit = handleSubmit(async (values) => {
     <div class="flex justify-center items-center h-screen">
         <Card class="max-w-md">
             <CardHeader>
-                <CardTitle>Getting Started</CardTitle>
-                <CardDescription class="mt-2">To get started using the Translator Bot you will need to provide a Twitch
-                    Bot Access token that allows the bot to connect to Twitch.
+                <CardTitle>{{ $t('getting started.getting started') }}</CardTitle>
+                <CardDescription class="mt-2">
+                    {{ $t('getting started.introduction') }}
                 </CardDescription>
                 <CardDescription>
-                    The easiest way to obtain a token is by generating a <br> "<b>Bot Chat Token</b>" using the Twitch
-                    Token Generator.
+                    <p v-html="$t('getting started.token help')"></p>
                     <Button as="a" class="px-0" href="https://twitchtokengenerator.com/" target="_blank" variant="link">
-                        Go to the Twitch Token Generator
+                        {{ $t('getting started.open token generator') }}
                         <IconExternalLink :size="14" class="ml-1" color="currentColor"/>
                     </Button>
                 </CardDescription>
@@ -86,13 +87,13 @@ const onSubmit = handleSubmit(async (values) => {
                 <form class="space-y-6" @submit="onSubmit">
                     <FormField v-slot="{ componentField }" :validate-on-blur="!isFieldDirty" name="token">
                         <FormItem>
-                            <FormLabel>Token</FormLabel>
+                            <FormLabel>{{ $t('getting started.token') }}</FormLabel>
                             <FormControl>
                                 <Input :disabled="isSubmitting" placeholder="Enter your token" type="password"
                                        v-bind="componentField"/>
                             </FormControl>
                             <FormDescription>
-                                Never share this token with anyone.
+                                {{ $t('getting started.token hint') }}
                             </FormDescription>
                             <FormMessage/>
                         </FormItem>
@@ -100,13 +101,13 @@ const onSubmit = handleSubmit(async (values) => {
 
                     <FormField v-slot="{ componentField }" :validate-on-blur="!isFieldDirty" name="username">
                         <FormItem>
-                            <FormLabel>Twitch Channel</FormLabel>
+                            <FormLabel>{{ $t('getting started.channel') }}</FormLabel>
                             <FormControl>
                                 <Input :disabled="isSubmitting" placeholder="Your Twitch channel" type="text"
                                        v-bind="componentField"/>
                             </FormControl>
                             <FormDescription>
-                                The name of your Twitch Channel.
+                                {{ $t('getting started.channel hint') }}
                             </FormDescription>
                             <FormMessage/>
                         </FormItem>
@@ -114,8 +115,8 @@ const onSubmit = handleSubmit(async (values) => {
 
                     <Button :disabled="isSubmitting" type="submit">
                         <IconLoader v-if="isSubmitting" :size="14" class="mr-1 animate-spin" color="currentColor"/>
-                        <span v-if="isSubmitting">Loading</span>
-                        <span v-else>Continue</span>
+                        <span v-if="isSubmitting">{{ $t('getting started.submitting') }}</span>
+                        <span v-else>{{ $t('getting started.continue') }}</span>
                     </Button>
                 </form>
             </CardContent>

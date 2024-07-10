@@ -7,9 +7,11 @@
     "back": "Terug",
     "save": "Opslaan",
     "reset form": "Formulier resetten",
+    "submitting": "Bezig",
     "settings": {
         "settings": "Instellingen",
         "manage settings": "Beheer de instellingen hier",
+        "more settings": "Meer instellingen",
         "language": {
             "label": "Taal",
             "description": "Past de weergave taal aan"
@@ -20,6 +22,7 @@
             "configure": "Berichten aanpassen",
             "messages": "Berichten",
             "add message": "Bericht toevoegen",
+            "settings saved": "Berichten opgeslagen",
             "rules": {
                 "message required": "Voer een geldig bericht in",
                 "message length": "Het bericht mag niet langer zijn dan 500 karakters"
@@ -38,10 +41,50 @@
             "interval description": "Hoeveel seconden moeten er tussen elk welkomstbericht zitten?",
             "interval hint": "{seconds} seconden",
             "messages hint": "Gebruik de {0} placeholder om de naam van de gebruiker te vermelden",
+            "settings saved": "Instellingen opgeslagen",
             "rules": {
                 "message required": "Voer een geldig bericht in",
-                "message length": "Het bericht mag niet langer zijn dan 500 karakters"
+                "message length": "Het bericht mag niet langer zijn dan 500 karakters",
+                "type invalid": "Kies een geldig type"
             }
+        }
+    },
+    "twitch": {
+        "connected": "Verbonden",
+        "connected as": "Verbonden als: {name}",
+        "joined": "Actief",
+        "joined in": "Actief in: {channels}",
+        "connect": "Verbind",
+        "join": "Verbind met kanalen",
+        "disconnect": "Verbinding verbreken"
+    },
+    "getting started": {
+        "getting started": "Om te beginnen",
+        "introduction": "Om aan de slag te gaan met het gebruik van de Translator Bot moet je een Twitch Bot Access token opgeven waarmee de bot verbinding kan maken met Twitch.",
+        "token help": "De eenvoudigste manier om een token te verkrijgen is door een <br> \"<b>Bot Chat Token</b>\" te genereren met behulp van de Twitch Token Generator.",
+        "open token generator": "Open de Twitch Token Generator",
+        "token": "Token",
+        "token hint": "Deel je token nooit met andere mensen",
+        "channel": "Twitch kanaal",
+        "channel hint": "De naam van je Twitch kanaal",
+        "continue": "Doorgaan",
+        "successfully connected": {
+            "title": "Successvol verbonden",
+            "description": "Verbonden als {name}"
+        },
+        "invalid scopes dialog": {
+            "title": "Ongeldige token permissies",
+            "description": "De token dat je hebt ingevuld is geldig, maar mist een van de volgende permissies: {0} {1}. Zorg ervoor dat je deze permissies hebt ingeschakeld bij het genereren van de token.",
+            "close": "Sluiten"
+        },
+        "invalid token dialog": {
+            "title": "Invalid Token",
+            "description": "De token die je hebt ingevuld is ongeldig. Zorg ervoor dat je het juiste token hebt ingevuld.",
+            "close": "Sluiten"
+        },
+        "rules": {
+            "token required": "Vul een geldige token in.",
+            "channel required": "Vul een geldige kanaal naam in."
         }
     }
 }
